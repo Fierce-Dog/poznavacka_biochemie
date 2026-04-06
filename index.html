@@ -6,20 +6,20 @@
     <title>Nekonečná Poznávačka</title>
     <style>
         :root { --primary: #4a90e2; --success: #2ecc71; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: flex-start; min-height: auto; padding: 5px; margin: 0; }
         .card { background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; }
         img { 
 			width: 100%; 
-			height: 300px; /* Můžete zvětšit na 350px nebo 400px podle potřeby */
+			height: 200px; /* Můžete zvětšit na 350px nebo 400px podle potřeby */
 			border-radius: 15px; 
 			object-fit: contain; /* TATO ZMĚNA zajistí, že bude vidět celý obrázek */
 			margin-bottom: 1rem; 
 			background: #fdfdfd; /* Jemné pozadí, kdyby byl obrázek úzký */
 		}
         input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; outline: none; }
-        input:focus { border-color: var(--primary); }
-        button { width: 100%; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; margin-top: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        #msg { margin-top: 15px; font-weight: bold; min-height: 20px; }
+        input:focus { border-color: #ffb371; }
+        button { width: 100%; background: #ffb371; color: #5d4037; border: none; padding: 12px; border-radius: 10px; margin-top: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        #msg { margin-top: 5px; font-weight: bold; min-height: 50px; }
         #info { color: gray; font-size: 0.8rem; margin-top: 10px; }
 		.card { 
 			display: flex; 
@@ -62,7 +62,7 @@
     <p id="info"></p>
     <img id="pic" src="" alt="Načítám...">
     <div id="input-area">
-        <input type="text" id="guess" placeholder="Co je na obrázku?" autocomplete="off" onkeypress="if(event.key === 'Enter') check()">
+        <input type="text" id="guess" placeholder="Co je to za sloučeninu?" autocomplete="off" onkeypress="if(event.key === 'Enter') check()">
         <button onclick="check()">Odeslat</button>
     </div>
 </div>
@@ -71,12 +71,15 @@
     // --- VAŠE DATA ---
     const items = [
 	{ file: "2-aminoethanol.jpg", name: "2-aminoethanol" },
+    /*
 	{ file: "2-deoxy-beta-d-ribofuranosa.jpg", name: "2-deoxy-beta-D-ribofuranosa" },
     { file: "2-deoxy-d-ribosa.jpg", name: "2-deoxy-D-ribosa" },
+    */
     { file: "acetaldehyd.jpg", name: "Acetaldehyd" },
     { file: "aceton.jpg", name: "Aceton" },
     { file: "adenin.jpg", name: "Adenin" },
     { file: "adp.jpg", name: "ADP" },
+    /*
     { file: "alanin.jpg", name: "Alanin" },
     { file: "alfa-d-erytrofuranosa.jpg", name: "Alfa-D-erytrofuranosa" },
     { file: "alfa-d-fruktofuranosa.jpg", name: "Alfa-D-fruktofuranosa" },
@@ -85,13 +88,17 @@
     { file: "alfa-d-glukofuranosa.jpg", name: "Alfa-D-glukofuranosa" },
     { file: "alfa-d-glukopyranosa.jpg", name: "Alfa-D-glukopyranosa" },
     { file: "alfa-d-ribulofuranosa.jpg", name: "Alfa-D-ribulofuranosa" },
+    */
     { file: "amp.jpg", name: "AMP" },
+    /*
     { file: "amylopektin.jpg", name: "Amylopektin" },
     { file: "amylosa.jpg", name: "Amylosa" },
     { file: "arginin.jpg", name: "Arginin" },
     { file: "asparagin.jpg", name: "Asparagin" },
+    */
     { file: "atp.jpg", name: "ATP" },
     { file: "beta-alanin.jpg", name: "Beta-alanin" },
+    /*
     { file: "beta-d-erytrofuranosa.jpg", name: "Beta-D-erytrofuranosa" },
     { file: "beta-d-fruktofuranosa.jpg", name: "Beta-D-fruktofuranosa" },
     { file: "beta-d-fruktopyranosa.jpg", name: "Beta-D-fruktopyranosa" },
@@ -102,55 +109,80 @@
     { file: "beta-d-mannopyranosa.jpg", name: "Beta-D-mannopyranosa" },
     { file: "beta-d-ribofuranosa.jpg", name: "Beta-D-ribofuranosa" },
     { file: "beta-d-ribulofuranosa.jpg", name: "Beta-D-ribulofuranosa" },
+    */
     { file: "cdp.jpg", name: "CDP" },
+    /*
     { file: "celobiosa.jpg", name: "Celobiosa" },
     { file: "celulosa.jpg", name: "celulosa" },
+    */
     { file: "ctp.jpg", name: "CTP" },
+    /*
     { file: "cystein.jpg", name: "Cystein" },
+    */
     { file: "cytosin.jpg", name: "Cytosin" },
+    /*
     { file: "d-erythrosa.jpg", name: "D-erythrosa" },
     { file: "d-fruktosa.jpg", name: "D-fruktosa" },
     { file: "d-galaktosa.jpg", name: "D-galaktosa" },
     { file: "d-glukosa.jpg", name: "D-glukosa" },
+     */
     { file: "dihydroxyaceton.jpg", name: "Dihydroxyaceton" },
     { file: "dihydroxyacetonfosfat.jpg", name: "Dihydroxyacetonfosfát" },
+    /*
     { file: "d-ribosa.jpg", name: "D-ribosa" },
     { file: "d-ribulosa.jpg", name: "D-ribulosa" },
     { file: "d-xylosa.jpg", name: "D-xylosa" },
     { file: "d-xylulosa.jpg", name: "D-xylulosa" },
+    */
     { file: "ethanol.jpg", name: "Ethanol" },
+    /*
     { file: "fenylalanin.jpg", name: "Fenylalanin" },
+    */
     { file: "formaldehyd.jpg", name: "Formaldehyd" },
-    { file: "fosfatidylethanolamin.jpg", name: "Fosfatidylethanolamin" },
+    { file: "fosfatidylethanolamin.jpg", name: "Fosfatidylkolamin" }, /* prověřit */
     { file: "fosfatidylcholin.jpg", name: "Fosfatidylcholin" },
+    /*
     { file: "fruktosa-1,6-bisfosfat.jpg", name: "Fruktosa-1,6-bisfosfát" },
     { file: "fruktosa-6-fosfat.jpg", name: "Fruktosa-6-fosfát" },
+    */
     { file: "gdp.jpg", name: "GDP" },
+    /*
     { file: "glukosa-1-fosfat.jpg", name: "Glukosa-1-fosfát" },
     { file: "glukosa-6-fosfat.jpg", name: "Glukosa-6-fosfát" },
     { file: "glutamin.jpg", name: "Glutamin" },
+    */
     { file: "glyceraldehyd.jpg", name: "Glyceraldehyd" },
     { file: "glyceraldehyd-3-fosfat.jpg", name: "Glyceraldehyd-3-fosfát" },
     { file: "glycerol.jpg", name: "Glycerol" },
     { file: "glycerol-3-fosfat.jpg", name: "Glycerol-3-fosfát" },
+    /*
     { file: "glycin.jpg", name: "Glycin" },
     { file: "glykogen.jpg", name: "Glykogen" },
+    */
     { file: "gtp.jpg", name: "GTP" },
     { file: "guanin.jpg", name: "Guanin" },
     { file: "hem.jpg", name: "Hem" },
+    /*
     { file: "histidin.jpg", name: "Histidin" },
+    */
     { file: "hydroxyprolin.jpg", name: "Hydroxyprolin" },
     { file: "cholesterol.jpg", name: "Cholesterol" },
     { file: "cholin.jpg", name: "Cholin" },
+    /*
     { file: "isoleucin.jpg", name: "Isoleucin" },
     { file: "isomaltosa.jpg", name: "Isomaltosa" },
+    */
     { file: "kyselina_2-oxoglutarova.jpg", name: "Kyselina 2-oxoglutarová" },
     { file: "kyselina_arachidonova.jpg", name: "Kyselina arachidonová" },
+    /*
     { file: "kyselina_asparagova.jpg", name: "Kyselina asparagová" },
+     */
     { file: "kyselina_citronova.jpg", name: "Kyselina citronová" },
     { file: "kyselina_fosfatidova.jpg", name: "Kyselina fosfatidová" },
     { file: "kyselina_fumarova.jpg", name: "Kyselina fumarová" },
+    /*
 	{ file: "kyselina_glutamova.jpg", name: "Kyselina glutamová" },
+     */
 	{ file: "kyselina_glutarova.jpg", name: "Kyselina glutarová" },
     { file: "kyselina_isocitronova.jpg", name: "Kyselina isocitronová" },
     { file: "kyselina_jablecna.jpg", name: "Kyselina jablečná" },
@@ -173,6 +205,7 @@
 	{ file: "kyselina_pyrohroznova.jpg", name: "Kyselina pyrohroznová" },
 	{ file: "kyselina_stearova.jpg", name: "Kyselina stearová" },
 	{ file: "kyselina_valerova.jpg", name: "Kyselina valerová" },
+    /*
     { file: "laktosa.jpg", name: "Laktosa" },
     { file: "l-erythrosa.jpg", name: "L-erythrosa" },
     { file: "leucin.jpg", name: "Leucin" },
@@ -186,60 +219,82 @@
     { file: "lysin.jpg", name: "Lysin" },
     { file: "maltosa.jpg", name: "Maltosa" },
     { file: "methionin.jpg", name: "Methionin" },
+     */
     { file: "mocovina.jpg", name: "Močovina" },
     { file: "nikotinamid.jpg", name: "Nikotinamid" },
     { file: "ornitin.jpg", name: "Ornitin" },
+    /*
     { file: "prolin.jpg", name: "Prolin" },
+     */
     { file: "purin.jpg", name: "Purin" },
     { file: "pyrimidin.jpg", name: "Pyrimidin" },
+    /*
     { file: "sacharosa.jpg", name: "Sacharosa" },
     { file: "selenocystein.jpg", name: "Selenocystein" },
     { file: "serin.jpg", name: "Serin" },
     { file: "threonin.jpg", name: "Threonin" },
+     */
     { file: "thymin.jpg", name: "Thymin" },
     { file: "ttp.jpg", name: "TTP" },
+    /*
     { file: "tryptofan.jpg", name: "Tryptofan" },
     { file: "tyrosin.jpg", name: "Tyrosin" },
+     */
     { file: "udp.jpg", name: "UDP" },
     { file: "uracil.jpg", name: "Uracil" },
     { file: "utp.jpg", name: "UTP" },
+    /*
 	{ file: "valin.jpg", name: "Valin" }
+     */
     ];
 
+    // --- GLOBÁLNÍ PROMĚNNÉ (nech si je nahoře nad funkcemi) ---
     let current;
     let attempts = 0;
-    let pool = []; // Aktuální balíček pro dané kolo
+    let pool = []; 
+    let correctTotal = 0; 
+    let shownTotal = 0; 
 
-	function next() {
+    function next() {
         const msgField = document.getElementById("msg");
-        const infoField = document.getElementById("info");
-        
-        // Reset hlášek nad obrázkem
-        msgField.innerText = "Poznej obrázek";
-        msgField.style.color = "gray";
-        msgField.style.fontSize = "18px";
-        msgField.style.fontWeight = "normal";
+        const inputField = document.getElementById("guess");
 
+        // 1. KONTROLA KONCE KOLA
         if (pool.length === 0) {
             pool = [...items];
+            correctTotal = 0; 
+            shownTotal = 0;
+            // Tuto hlášku uvidíš jen na zlomek vteřiny, než se vybere první zvíře
             msgField.innerText = "Začínáme nové kolo!";
-            msgField.style.color = "blue";
+            msgField.style.color = "brown";
+        } else {
+            msgField.innerText = "Poznej sloučeninu";
+            msgField.style.color = "brown";
         }
 
+        // 2. VÝBĚR NOVÉHO ZVÍŘETE
+        attempts = 0; 
         const idx = Math.floor(Math.random() * pool.length);
         current = pool[idx];
-        
+
+        // 3. RESET POLÍ
         document.getElementById("pic").src = current.file;
-        document.getElementById("guess").value = "";
-        document.getElementById("guess").disabled = false;
-        document.getElementById("guess").focus();
-        attempts = 0;
+        inputField.value = "";
+        inputField.disabled = false;
+        inputField.focus();
+        
+        // Smazal jsem odtud shownTotal++, aby se to nepřičítalo dopředu
         updateInfo();
     }
 
     function updateInfo() {
-        document.getElementById("info").innerText = `Zbývá v kole: ${pool.length} | Pokus: ${attempts + 1}/3`;
-        document.getElementById("info").style.color = "#666";
+        const infoElement = document.getElementById("info");
+        if (infoElement) {
+            // Math.min(attempts + 1, 3) zajistí, že i při prohře zůstane v textu "3/3" a neskočí tam "4/3"
+            const displayAttempts = Math.min(attempts + 1, 3);
+            infoElement.innerText = `Skóre: ${correctTotal}/${shownTotal}/${items.length} | Zbývá v kole: ${pool.length} | Pokus: ${displayAttempts}/3`;
+            infoElement.style.color = "#666";
+        }
     }
 
     function check() {
@@ -251,33 +306,45 @@
         if (val === "" || inputField.disabled) return;
 
         if (val === ans) {
-            msgField.innerText = "✓ Výborně, to je ono!";
+            // --- SCÉNÁŘ: UHODNUTO ---
+            correctTotal++; // Bod nahoru
+            shownTotal++;   // Úloha splněna
+            
+            msgField.innerHTML = `Správně!<br><span style="font-size: 21px;">${current.name}</span>`;
             msgField.style.color = "green";
             inputField.disabled = true;
             
             pool = pool.filter(i => i !== current);
+            updateInfo(); // Překreslíme skóre na obrazovce
             setTimeout(next, 1500);
+
         } else {
+            // --- SCÉNÁŘ: CHYBA ---
             attempts++;
             if (attempts < 3) {
+                // Pořád máš pokusy
                 msgField.innerText = `✗ Špatně, zkus to znovu!`;
                 msgField.style.color = "orange";
                 inputField.value = "";
                 inputField.focus();
-                updateInfo();
+                updateInfo(); // Aktualizujeme jen číslo pokusu (1/3 -> 2/3)
             } else {
-                msgField.innerHTML = `Bohužel. Správně bylo:<br><span style="font-size: 28px;">${current.name}</span>`;
+                // --- SCÉNÁŘ: PROHRA (PO 3. POKUSU) ---
+                shownTotal++; // Úloha splněna (nepřidáváme bod do correctTotal)
+                
+                msgField.innerHTML = `Správně bylo:<br><span style="font-size: 21px;">${current.name}</span>`;
                 msgField.style.color = "red";
                 msgField.style.fontWeight = "bold";
                 inputField.disabled = true;
                 
                 pool = pool.filter(i => i !== current);
+                updateInfo(); // Překreslíme skóre
                 setTimeout(next, 5000);
             }
         }
     }
 
-    // Spuštění
+    // Spuštění hry
     next();
 </script>
 </body>
